@@ -221,6 +221,7 @@ public class LogicalProject<CHILD_TYPE extends Plan> extends LogicalUnary<CHILD_
 
     @Override
     public JSONObject toJson() {
+        System.out.println("LogicalProject.toJson()");
         JSONObject logicalProject = super.toJson();
         JSONObject properties = new JSONObject();
         properties.put("Projects", projects.toString());

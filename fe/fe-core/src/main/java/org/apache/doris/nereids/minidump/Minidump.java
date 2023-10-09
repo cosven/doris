@@ -27,6 +27,7 @@ import org.apache.doris.nereids.parser.NereidsParser;
 import org.apache.doris.nereids.trees.plans.AbstractPlan;
 import org.apache.doris.nereids.trees.plans.commands.ExplainCommand;
 import org.apache.doris.nereids.trees.plans.logical.LogicalPlan;
+import org.apache.doris.nereids.trees.plans.logical.LogicalProject;
 import org.apache.doris.qe.ConnectContext;
 import org.apache.doris.qe.OriginStatement;
 import org.apache.doris.qe.SessionVariable;
@@ -128,6 +129,13 @@ public class Minidump {
 
     /** Nereids minidump entry, argument should be absolute address of minidump path */
     public static void main(String[] args) {
+        NereidsParser nereidsParser_ = new NereidsParser();
+        LogicalPlan parsed_ = nereidsParser_.parseSingle("select a from t as t1 join t2 on t1.a=t2.a and t1.c=t1.d;");
+        String result = ((AbstractPlan) parsed_).toJson().toString(2);
+        System.out.println(result);
+        System.out.println(parsed_.treeString());
+        System.exit(0);
+
         assert (args.length == 1);
         Minidump minidump = null;
         try {

@@ -36,6 +36,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.json.JSONObject;
+
 /**
  * The node of logical plan for sub query and alias
  *
@@ -124,6 +126,15 @@ public class LogicalSubQueryAlias<CHILD_TYPE extends Plan> extends LogicalUnary<
         return Utils.toSqlString("LogicalSubQueryAlias",
                 "qualifier", qualifier
         );
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject logicalRelation = super.toJson();
+        JSONObject properties = new JSONObject();
+        properties.put("Qualifier", qualifier.toString());
+        logicalRelation.put("Properties", properties);
+        return logicalRelation;
     }
 
     @Override
